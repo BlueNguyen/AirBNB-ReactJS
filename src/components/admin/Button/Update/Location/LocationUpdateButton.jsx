@@ -8,7 +8,7 @@ const LocationUpdateButton = ({ location }) => {
     setShowUpdateForm(false);
   };
   return (
-    <>
+    <div>
       <button
         className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-primary rounded-lg dark:text-primary-dark focus:outline-none focus:shadow-outline-gray"
         aria-label="Edit"
@@ -29,7 +29,7 @@ const LocationUpdateButton = ({ location }) => {
           location={location}
         />
       )}
-    </>
+    </div>
   );
 };
 
