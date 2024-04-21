@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HeaderAdmin from "../components/admin/HeaderAdmin/HeaderAdmin";
 import { Outlet, useLocation } from "react-router-dom";
 import DesktopSidebar from "../components/admin/SidebarAdmin/DesktopSidebar/DesktopSidebar";
-// import MobileSidebar from "../components/admin/SidebarAdmin/MobileSidebar/MobileSidebar";
+import MobileSidebar from "../components/admin/SidebarAdmin/MobileSidebar/MobileSidebar";
 import { themeLocalStorage } from "../api/localService";
 import PrivateRoute from "./PrivateRoute";
 
@@ -51,7 +51,7 @@ const AdminLayout = () => {
             className="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
           ></div>
         )}
-        {/* <MobileSidebar toggleSideMenu={toggleSideMenu} /> */}
+        <MobileSidebar toggleSideMenu={toggleSideMenu} />
 
         <div className="flex flex-col flex-1 w-full">
           <HeaderAdmin handleToggleSideMenu={handleToggleSideMenu} />

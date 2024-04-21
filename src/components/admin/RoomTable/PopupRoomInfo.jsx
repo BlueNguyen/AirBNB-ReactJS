@@ -1,18 +1,18 @@
 import React from "react";
-// import Iron from "../Icon/Iron";
-// import AirCondition from "../Icon/AirCondition";
-// import BedSingle from "../Icon/BedSingle";
-// import BedDouble from "../Icon/BedDouble";
-// import Door from "../Icon/Door";
-// import Kitchen from "../Icon/Kitchen";
+import Iron from "../Icon/Iron";
+import AirCondition from "../Icon/AirCondition";
+import BedSingle from "../Icon/BedSingle";
+import BedDouble from "../Icon/BedDouble";
+import Door from "../Icon/Door";
+import Kitchen from "../Icon/Kitchen";
 import ParkingMotobyte from "../Icon/ParkingMotobyte";
-// import ParkingCar from "../Icon/ParkingCar";
-// import Shower from "../Icon/Shower";
-// import Swimming from "../Icon/Swimming";
-// import Tivi from "../Icon/Tivi";
-// import WashingMachine from "../Icon/WashingMachine";
-// import Wifi from "../Icon/Wifi";
-// import People from "../Icon/People";
+import ParkingCar from "../Icon/ParkingCar";
+import Shower from "../Icon/Shower";
+import Swimming from "../Icon/Swimming";
+import Tivi from "../Icon/Tivi";
+import WashingMachine from "../Icon/WashingMachine";
+import Wifi from "../Icon/Wifi";
+import People from "../Icon/People";
 
 const PopupRoomInfo = ({ room, index }) => {
   return (
