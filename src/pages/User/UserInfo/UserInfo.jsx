@@ -13,12 +13,14 @@ import UploadAvatarModal from '../../../layouts/Modal/UploadAvatarModal';
 import ToastProvider from '../../../template/user/ToastProvider';
 import UploadUserInfoModal from '../../../layouts/Modal/UploadUserInfoModal';
 import { handleOpenUploadInfo } from '../../../hooks/useUploadUserInfoModal';
+import { getRoomById } from '../../../hooks/useGetRoomById';
 const UserInfo = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const { user } = useSelector(state => state.useGetUserById)
     const { bookedRoom } = useSelector(state => state.useGetBookedById)
-
+    const [roomInfo, setRoomInfo] = useState([])
+    console.log("roominfo", roomInfo.payload)
     const openModalUploadAvatar = () => {
         dispatch(handleOpenUpload());
     }
@@ -32,6 +34,18 @@ const UserInfo = () => {
         dispatch(getBookedById(id))
     }, [])
 
+    useEffect(() => {
+        const newRoomInfo = []
+        bookedRoom.forEach(room => {
+            dispatch(getRoomById(room.maPhong)).then(roomData => {
+                newRoomInfo.push(roomData.payload);
+                console.log("roomData", roomData)
+                if (newRoomInfo.length === bookedRoom.length) {
+                    setRoomInfo(newRoomInfo);
+                }
+            });
+        });
+    }, [bookedRoom, dispatch]);
     const avatarSource = user && user.avatar ? user.avatar : placeholder;
 
     return (
@@ -57,18 +71,20 @@ const UserInfo = () => {
                         text-white font-bold py-2 px-4 rounded'>Chỉnh sửa hồ sơ</button>
                     <div className='mt-20'>
                         <Heading title="Phòng đã thuê" />
-                        {bookedRoom.map((room, index) => {
-                            return (
-                                <div className='flex items-center w-full h-12 md:h-16 cursor-pointer rounded-md px-4 md:px-6 hover:bg-neutral-200' onClick={() => { }}>
-                                    <div className='w-1/4 md:w-1/6'>
-                                        <img src={room.hinhAnh ? room.hinhAnh : ""} alt='Ảnh địa điểm' className='w-full h-full object-cover rounded-md' />
-                                    </div>
-                                    <div className='w-3/4 md:w-5/6 ml-2'>
-                                        <p className='text-sm md:text-base font-semibold'>{room.tinhThanh}</p>
-                                    </div>
+                        {roomInfo.map((room, index) => (
+                            <div key={index} className='flex items-center w-full h-16 md:h-30 cursor-pointer hover:bg-neutral-200' onClick={() => { }}>
+                                <div className='w-1/4 md:w-1/3'>
+                                    <img
+                                        src={room.hinhAnh}
+                                        alt='Ảnh địa điểm'
+                                        className='w-full object-cover rounded-md'
+                                    />
                                 </div>
-                            )
-                        })}
+                                <div className='w-3/4 md:w-2/3 ml-2'>
+                                    <p className='text-sm md:text-base font-semibold'>{room.tenPhong}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -78,3 +94,4 @@ const UserInfo = () => {
 }
 
 export default UserInfo
+

@@ -46,5 +46,6 @@ export const bookingSer = {
 };
 
 export const binhLuanServ = {
-  getAllBinhLuanById: (id) => httpsNoLoading.get(`/binh-luan/lay-binh-luan-theo-phong/${id}`)
+  getAllBinhLuanById: (id) => httpsNoLoading.get(`/binh-luan/lay-binh-luan-theo-phong/${id}`),
+  createBinhLuan: (data) => httpsNoLoading.post(`/binh-luan`, data)
 }

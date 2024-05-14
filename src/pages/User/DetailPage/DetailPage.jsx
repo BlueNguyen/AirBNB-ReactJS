@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../../layouts/Header/Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -12,14 +12,27 @@ import { CiParking1 } from "react-icons/ci";
 import { FaWifi } from "react-icons/fa";
 import { MdOutlinePool, MdDesk } from "react-icons/md";
 import { getBinhLuanById } from '../../../hooks/useGetBinhLuanById'
-import { Input } from 'antd';
+import { Input, Select } from 'antd';
 import { getUserById } from '../../../hooks/useGetUserById'
 import { userLocalStorage } from '../../../api/localService'
 import ButtonCustome from '../../../components/user/ButtonCustome'
 import { Pagination } from 'antd';
+import { useFormik } from 'formik'
+import { binhLuanServ } from '../../../api/api'
+import toast from 'react-hot-toast'
+import InputCustom from '../../../components/user/Input/InputCustome'
+import moment from 'moment'
+import ToastProvider from '../../../template/user/ToastProvider'
+import { DatePicker, Space } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Dropdown } from 'antd';
+import { FiDollarSign } from "react-icons/fi";
+import RangePickerCustome from '../../../components/user/Input/RangePickerCustome'
+
 
 const DetailPage = () => {
     const { TextArea } = Input;
+    const { Option } = Select;
 
 
     const { roomById } = useSelector(state => state.useGetRoomById)
@@ -28,20 +41,91 @@ const DetailPage = () => {
     const userLocal = userLocalStorage.get("user")
     const { id } = useParams();
     const dispatch = useDispatch()
-    useEffect(() => { dispatch(getRoomById(id)) }, [])
-    useEffect(() => { dispatch(getBinhLuanById(id)) }, [])
-    useEffect(() => { dispatch(getUserById(userLocal.user.id)) }, [])
-    const totalPage = Math.ceil(arrBinhLuan.length / 5);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [commentsToShow, setCommentsToShow] = useState([]);
+
+    const handleRangePickerChange = (dates) => {
+        const [start, end] = dates;
+        formikBooked.setFieldValue('ngayDen', start ? moment(start).format('YYYY-MM-DD HH:mm:ss') : null);
+        formikBooked.setFieldValue('ngayDi', end ? moment(end).format('YYYY-MM-DD HH:mm:ss') : null);
+    };
+    console.log(formikBooked.values.ngayDen)
+    console.log(formikBooked.values.ngayDi)
+    useEffect(() => {
+        dispatch(getRoomById(id));
+        dispatch(getBinhLuanById(id));
+        dispatch(getUserById(userLocal.user.id));
+    }, [dispatch, id, userLocal.user.id]);
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * 5;
+        const endIndex = startIndex + 5;
+        setCommentsToShow(arrBinhLuan.slice(startIndex, endIndex));
+    }, [arrBinhLuan, currentPage]);
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+    const renderGuestOptions = () => {
+        const options = [];
+        for (let i = 1; i <= 20; i++) {
+            options.push(<Option key={i} value={i}>{i} khách</Option>);
+        }
+        return options;
+    };
+
+    const now = new Date();
+    const dateString = moment(now).format('YYYY-MM-DD HH:mm:ss');
+    const total = (value1, value2) => {
+        return value1 * value2
+    }
+    const formik = useFormik({
+        initialValues: {
+            id: 0,
+            maPhong: parseInt(id),
+            maNguoiBinhLuan: userLocal.user.id,
+            ngayBinhLuan: dateString,
+            noiDung: "",
+            saoBinhLuan: 0
+        },
+        onSubmit: async (values) => {
+            try {
+                const res = await binhLuanServ.createBinhLuan(values);
+                console.log(res)
+                toast.success("Bình luận thành công")
+                setTimeout(() => {
+                    window.location.reload()
+                }, 500)
+            } catch (error) {
+                console.log(values)
+                toast.error("Something went Wrong")
+            }
+        }
+    })
+
+    const formikBooked = useFormik({
+        initialValues: {
+            id: 0,
+            maPhong: parseInt(id),
+            ngayDen: "",
+            ngayDi: "",
+            soLuongKhach: 0,
+            maNguoiDung: userLocal.user.id
+        },
+        onSubmit: async (values) => {
+            try {
+
+            } catch (error) {
+                toast.error("Something went Wrong")
+            }
+        }
+    })
     return (
         <div>
+            <ToastProvider />
             <Header />
             <>
                 <div className='my-10 ax-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4'>
                     <div className='text-3xl font-bold'>{roomById.tenPhong}</div>
-                    <div>
-                        {roomById.moTa}
-                    </div>
                     <img src={roomById.hinhAnh} alt="Hình phòng" />
                     <div className='flex'>
                         <div className="w-3/5 text-xl font-semibold py-2">
@@ -126,8 +210,12 @@ const DetailPage = () => {
                                         </div>
                                     )
                                 })}
-                                <Pagination defaultCurrent={1} total={arrBinhLuan.length} pageSize={5} />
-
+                                <Pagination
+                                    defaultCurrent={1}
+                                    total={arrBinhLuan.length}
+                                    pageSize={5}
+                                    onChange={handlePageChange}
+                                />
                             </div>
                             <div>
                                 <div className="flex items-center my-3">
@@ -135,16 +223,42 @@ const DetailPage = () => {
                                         <img className="rounded-full h-12 w-12" src={user.avatar ? user.avatar : placeholder} alt="avatar" />
                                     </div>
                                     <div className='flex-1 ml-4'>
-                                        <TextArea rows={4} />
+                                        <TextArea rows={4} id="noiDung" name="noiDung" value={formik.values.noiDung} onChange={formik.handleChange} />
                                     </div>
                                 </div>
-                                <div className='w-1/6'>
-                                    <ButtonCustome label="Bình luận" />
+                                <div className='w-1/2 md:w-1/4 lg:w-1/6'>
+                                    <ButtonCustome type="submit" onClick={formik.handleSubmit} label="Bình luận" />
                                 </div>
                             </div>
                         </div>
                         <div className='w-2/5'>
-
+                            <div className="shadow-md p-6 rounded-lg bg-white m-5">
+                                <div className="flex items-center py-2">
+                                    <FiDollarSign />
+                                    <span className="text-xl">{roomById.giaTien} / đêm</span>
+                                </div>
+                                <RangePickerCustome onChange={handleRangePickerChange} />
+                                <Select
+                                    placeholder="Số lượng khách"
+                                    onChange={(value) => formikBooked.setFieldValue("soLuongKhach", value)}
+                                    className="w-full h-20"
+                                >
+                                    {renderGuestOptions()}
+                                </Select>
+                                <div className='py-2'>
+                                    <ButtonCustome label="Đặt phòng" />
+                                    <p className='pt-2 text-center font-light'>Bạn vẫn chưa bị trừ tiền?</p>
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="flex items-left">
+                                        <p>${roomById.giaTien}x{formikBooked.values.soLuongKhach}</p>
+                                        <p>{formikBooked.values.ngayDen}</p>
+                                    </div>
+                                    <div className="flex items-right">
+                                        {total(roomById.giaTien, formikBooked.values.soLuongKhach)}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
