@@ -30,7 +30,7 @@ export const roomServ = {
 
 export const locationServ = {
   getAllLocations: () => httpsAdmin.get("/vi-tri"),
-  getAllLocations: () => httpsNoLoading.get("/vi-tri"),
+  getAllLocation: () => httpsNoLoading.get("/vi-tri"),
   getLocationByID: (id) => httpsAdmin.get(`/vi-tri/${id}`),
   createLocation: (data) => httpsAdmin.post("/vi-tri", data),
   updateLocation: (data) => httpsAdmin.put(`/vi-tri/${data.id}`, data),
