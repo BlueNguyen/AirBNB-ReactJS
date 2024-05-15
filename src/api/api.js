@@ -30,6 +30,7 @@ export const roomServ = {
 
 export const locationServ = {
   getAllLocations: () => httpsAdmin.get("/vi-tri"),
+  getAllLocations: () => httpsNoLoading.get("/vi-tri"),
   getLocationByID: (id) => httpsAdmin.get(`/vi-tri/${id}`),
   createLocation: (data) => httpsAdmin.post("/vi-tri", data),
   updateLocation: (data) => httpsAdmin.put(`/vi-tri/${data.id}`, data),
@@ -41,6 +42,7 @@ export const locationServ = {
 
 export const bookingSer = {
   getAllBookings: () => httpsAdmin.get("/dat-phong"),
+  createBooked: (data) => httpsNoLoading.post("/dat-phong", data),
   getBookedById: (id) => httpsAdmin.get(`/dat-phong/lay-theo-nguoi-dung/${id}`),
   deleteBooking: (id) => httpsAdmin.delete(`/dat-phong/${id}`),
 };

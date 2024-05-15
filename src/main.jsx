@@ -21,6 +21,7 @@ import useUploadUserInfoModal from "./hooks/useUploadUserInfoModal.js";
 import useGetRoomByViTri from "./hooks/useGetRoomByViTri.js";
 import useGetRoomById from "./hooks/useGetRoomById.js";
 import useGetBinhLuanById from "./hooks/useGetBinhLuanById.js";
+import useGetAllViTri from "./hooks/useGetAllViTri.js";
 
 export const store = configureStore({
   reducer: {
@@ -38,7 +39,8 @@ export const store = configureStore({
     useUploadUserInfoModal,
     useGetRoomByViTri,
     useGetRoomById,
-    useGetBinhLuanById
+    useGetBinhLuanById,
+    useGetAllViTri
   },
 });
 

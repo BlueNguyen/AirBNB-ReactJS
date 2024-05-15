@@ -6,15 +6,15 @@ const initialState = {
     arrViTri: [],
 }
 
-export const getAllViTri = createAsyncThunk("useViTriModal/getAllViTri",
+export const getAllViTri = createAsyncThunk("useGetAllViTri/getAllViTri",
     async (dataLocal = "", { _, dispatch }) => {
-        const res = await locationServ.getPagination(dataLocal);
-        return res.data.content.data
+        const res = await locationServ.getAllLocations();
+        return res.data.content
     }
 )
 
-const useViTriModal = createSlice({
-    name: "useViTriModal",
+const useGetAllViTri = createSlice({
+    name: "useGetAllViTri",
     initialState,
     reducers: {
         handleAllViTri: (state, action) => {
@@ -28,6 +28,6 @@ const useViTriModal = createSlice({
     }
 })
 
-export const { handleAllViTri } = useViTriModal.actions
+export const { handleAllViTri } = useGetAllViTri.actions
 
-export default useViTriModal.reducer;
+export default useGetAllViTri.reducer;

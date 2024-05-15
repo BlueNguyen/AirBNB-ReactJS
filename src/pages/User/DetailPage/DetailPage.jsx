@@ -18,7 +18,7 @@ import { userLocalStorage } from '../../../api/localService'
 import ButtonCustome from '../../../components/user/ButtonCustome'
 import { Pagination } from 'antd';
 import { useFormik } from 'formik'
-import { binhLuanServ } from '../../../api/api'
+import { binhLuanServ, bookingSer } from '../../../api/api'
 import toast from 'react-hot-toast'
 import InputCustom from '../../../components/user/Input/InputCustome'
 import moment from 'moment'
@@ -27,12 +27,12 @@ import { DatePicker, Space } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown } from 'antd';
 import { FiDollarSign } from "react-icons/fi";
-import RangePickerCustome from '../../../components/user/Input/RangePickerCustome'
 
 
 const DetailPage = () => {
     const { TextArea } = Input;
     const { Option } = Select;
+    const { RangePicker } = DatePicker;
 
 
     const { roomById } = useSelector(state => state.useGetRoomById)
@@ -44,14 +44,21 @@ const DetailPage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [commentsToShow, setCommentsToShow] = useState([]);
+    const [numberOfDays, setNumberOfDays] = useState(0);
+    const [selectedDates, setSelectedDates] = useState([]);
 
     const handleRangePickerChange = (dates) => {
+        console.log(dates)
         const [start, end] = dates;
         formikBooked.setFieldValue('ngayDen', start ? moment(start).format('YYYY-MM-DD HH:mm:ss') : null);
         formikBooked.setFieldValue('ngayDi', end ? moment(end).format('YYYY-MM-DD HH:mm:ss') : null);
     };
-    console.log(formikBooked.values.ngayDen)
-    console.log(formikBooked.values.ngayDi)
+
+    const handleDateChange = (value) => {
+        console.log(value)
+        setSelectedDates(value);
+    };
+
     useEffect(() => {
         dispatch(getRoomById(id));
         dispatch(getBinhLuanById(id));
@@ -113,12 +120,27 @@ const DetailPage = () => {
         },
         onSubmit: async (values) => {
             try {
-
+                const res = await bookingSer.createBooked(values)
+                console.log(res)
+                toast.success("đã đặt phòng")
+                setTimeout(() => {
+                    window.location.reload;
+                }, 1000)
             } catch (error) {
+                console.log(values)
                 toast.error("Something went Wrong")
             }
         }
     })
+
+    useEffect(() => {
+        const startDate = moment(formikBooked.values.ngayDen);
+        const endDate = moment(formikBooked.values.ngayDi);
+        const duration = moment.duration(endDate.diff(startDate));
+        const days = duration.asDays(); // Số ngày giữa hai ngày
+        setNumberOfDays(days);
+    }, [formikBooked.values.ngayDen, formikBooked.values.ngayDi]);
+
     return (
         <div>
             <ToastProvider />
@@ -237,7 +259,10 @@ const DetailPage = () => {
                                     <FiDollarSign />
                                     <span className="text-xl">{roomById.giaTien} / đêm</span>
                                 </div>
-                                <RangePickerCustome onChange={handleRangePickerChange} />
+                                <RangePicker className='h-20 w-full'
+                                    placeholder={['Nhận phòng', 'Trả phòng']}
+                                    value={selectedDates}
+                                    onChange={handleRangePickerChange} />
                                 <Select
                                     placeholder="Số lượng khách"
                                     onChange={(value) => formikBooked.setFieldValue("soLuongKhach", value)}
@@ -246,17 +271,8 @@ const DetailPage = () => {
                                     {renderGuestOptions()}
                                 </Select>
                                 <div className='py-2'>
-                                    <ButtonCustome label="Đặt phòng" />
+                                    <ButtonCustome type="button" onClick={formikBooked.handleSubmit} label="Đặt phòng" />
                                     <p className='pt-2 text-center font-light'>Bạn vẫn chưa bị trừ tiền?</p>
-                                </div>
-                                <div className="flex justify-between">
-                                    <div className="flex items-left">
-                                        <p>${roomById.giaTien}x{formikBooked.values.soLuongKhach}</p>
-                                        <p>{formikBooked.values.ngayDen}</p>
-                                    </div>
-                                    <div className="flex items-right">
-                                        {total(roomById.giaTien, formikBooked.values.soLuongKhach)}
-                                    </div>
                                 </div>
                             </div>
                         </div>
