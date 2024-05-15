@@ -3,15 +3,15 @@ import { userAdminLocalStorage, userLocalStorage } from "./localService";
 import { store } from "../main";
 import { setLoadingOff, setLoadingOn } from "../redux/spinnerSlice";
 
-export const TOKEN_CYBER = import.meta.env.VITE_TOKEN_CYBERSOFT;
+export const TOKEN_CYBER = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJOb2RlSlMgNDEiLCJIZXRIYW5TdHJpbmciOiIxNy8xMC8yMDI0IiwiSGV0SGFuVGltZSI6IjE3MjkxMjMyMDAwMDAiLCJuYmYiOjE3MTE2NDUyMDAsImV4cCI6MTcyOTI3MDgwMH0.eZHFmA2-LPiTU4hhprKRbSSPHBM77j9yic31O97Z0rc";
 
 const token = userLocalStorage.get()?.token;
 
 export const configHeaders = () => {
   return {
-    Authorization: `Bearer ${token}`,
-    tokenCybersoft: TOKEN_CYBER,
+    // Authorization: `Bearer ${token}`,
     token,
+    tokenCybersoft: TOKEN_CYBER,
   };
 };
 
