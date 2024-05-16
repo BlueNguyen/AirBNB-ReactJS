@@ -27,6 +27,8 @@ import { DatePicker, Space } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown } from 'antd';
 import { FiDollarSign } from "react-icons/fi";
+import LoginModal from '../../../layouts/Modal/LoginModal'
+import RegisterModal from '../../../layouts/Modal/RegisterModal'
 
 
 const DetailPage = () => {
@@ -48,7 +50,6 @@ const DetailPage = () => {
     const [selectedDates, setSelectedDates] = useState([]);
 
     const handleRangePickerChange = (dates) => {
-        console.log(dates)
         const [start, end] = dates;
         formikBooked.setFieldValue('ngayDen', start ? moment(start).format('YYYY-MM-DD HH:mm:ss') : null);
         formikBooked.setFieldValue('ngayDi', end ? moment(end).format('YYYY-MM-DD HH:mm:ss') : null);
@@ -62,8 +63,10 @@ const DetailPage = () => {
     useEffect(() => {
         dispatch(getRoomById(id));
         dispatch(getBinhLuanById(id));
-        dispatch(getUserById(userLocal.user.id));
-    }, [dispatch, id, userLocal.user.id]);
+        if (userLocal) {
+            dispatch(getUserById(userLocal.user.id));
+        }
+    }, [dispatch, id]);
     useEffect(() => {
         const startIndex = (currentPage - 1) * 5;
         const endIndex = startIndex + 5;
@@ -82,14 +85,12 @@ const DetailPage = () => {
 
     const now = new Date();
     const dateString = moment(now).format('YYYY-MM-DD HH:mm:ss');
-    const total = (value1, value2) => {
-        return value1 * value2
-    }
+
     const formik = useFormik({
         initialValues: {
             id: 0,
             maPhong: parseInt(id),
-            maNguoiBinhLuan: userLocal.user.id,
+            maNguoiBinhLuan: userLocal ? userLocal.user.id : "",
             ngayBinhLuan: dateString,
             noiDung: "",
             saoBinhLuan: 0
@@ -116,19 +117,22 @@ const DetailPage = () => {
             ngayDen: "",
             ngayDi: "",
             soLuongKhach: 0,
-            maNguoiDung: userLocal.user.id
+            maNguoiDung: userLocal ? userLocal.user.id : ""
         },
         onSubmit: async (values) => {
             try {
                 const res = await bookingSer.createBooked(values)
-                console.log(res)
                 toast.success("đã đặt phòng")
                 setTimeout(() => {
                     window.location.reload;
                 }, 1000)
             } catch (error) {
-                console.log(values)
-                toast.error("Something went Wrong")
+                if (userLocal == null) {
+                    toast.error("Vui lòng đăng nhập")
+                }
+                else {
+                    toast.error("Something went Wrong")
+                }
             }
         }
     })
@@ -144,6 +148,8 @@ const DetailPage = () => {
     return (
         <div>
             <ToastProvider />
+            <LoginModal />
+            <RegisterModal />
             <Header />
             <>
                 <div className='my-10 ax-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4'>
@@ -261,7 +267,6 @@ const DetailPage = () => {
                                 </div>
                                 <RangePicker className='h-20 w-full'
                                     placeholder={['Nhận phòng', 'Trả phòng']}
-                                    value={selectedDates}
                                     onChange={handleRangePickerChange} />
                                 <Select
                                     placeholder="Số lượng khách"

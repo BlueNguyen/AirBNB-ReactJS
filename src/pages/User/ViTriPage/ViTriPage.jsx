@@ -7,6 +7,8 @@ import map1 from "../../../assets/img/map1.png"
 import Footer from '../../../layouts/Footer/Footer';
 import { getRoomByViTri } from '../../../hooks/useGetRoomByViTri';
 import { roomServ } from '../../../api/api';
+import LoginModal from '../../../layouts/Modal/LoginModal';
+import RegisterModal from '../../../layouts/Modal/RegisterModal';
 const ViTriPage = () => {
     const { roomByViTri } = useSelector(state => state.useGetRoomByViTri)
     const navigate = useNavigate()
@@ -20,6 +22,8 @@ const ViTriPage = () => {
     console.log(roomByViTri)
     return (
         <div>
+            <LoginModal />
+            <RegisterModal />
             <Header />
             <div className='max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 my-10'>
                 <div className="flex flex-col md:flex-row">
