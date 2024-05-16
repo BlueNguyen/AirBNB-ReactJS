@@ -14,6 +14,8 @@ import ToastProvider from '../../../template/user/ToastProvider';
 import UploadUserInfoModal from '../../../layouts/Modal/UploadUserInfoModal';
 import { handleOpenUploadInfo } from '../../../hooks/useUploadUserInfoModal';
 import { getRoomById } from '../../../hooks/useGetRoomById';
+import './userInfo.css'; // Check if the file is actually named userInfo.css
+
 const UserInfo = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
