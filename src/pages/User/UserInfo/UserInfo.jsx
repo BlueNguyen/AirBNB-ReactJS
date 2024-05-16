@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserById } from '../../../hooks/useGetUserById';
 import Header from '../../../layouts/Header/Header';
 import { FaCheckCircle } from 'react-icons/fa';
-import "./userInfo.css"
+import "./UserInfo.css"
 import { getBookedById } from '../../../hooks/useGetBookedById';
 import { handleOpenUpload } from '../../../hooks/useUploadAvatarModal';
 import UploadAvatarModal from '../../../layouts/Modal/UploadAvatarModal';
@@ -14,6 +14,8 @@ import ToastProvider from '../../../template/user/ToastProvider';
 import UploadUserInfoModal from '../../../layouts/Modal/UploadUserInfoModal';
 import { handleOpenUploadInfo } from '../../../hooks/useUploadUserInfoModal';
 import { getRoomById } from '../../../hooks/useGetRoomById';
+
+
 const UserInfo = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
