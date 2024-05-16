@@ -5,7 +5,7 @@ const Avatar = () => {
 
     const userLocal = userLocalStorage.get("user")
 
-    const avatarSource = userLocal && userLocal.user.avatar ? userLocal.user.avatar : placeholder;
+    const avatarSource = userLocal?.user?.avatar ? userLocal.user.avatar : placeholder;
     return (
         <img src={avatarSource} className='rounded-full' height="30" width="30" alt='Avatar' />
     )
