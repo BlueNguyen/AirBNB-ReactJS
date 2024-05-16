@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import AirBnb_Logo from "../../assets/img/AirBnb_Logo.png"
+import AirBnb_Logo from "../../assets/img/Airbnb_Logo.png"
 import { BiSearch } from 'react-icons/bi'
 import UserMenu from '../../components/user/UserMenu'
 import { userLocalStorage } from '../../api/localService'
