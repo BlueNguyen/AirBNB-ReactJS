@@ -22,6 +22,10 @@ const Dashboard = () => {
           {/* <!-- Cards --> */}
           <CardAdmin />
 
+          {/* <!-- Charts --> */}
+          <HeadingAdmin heading="Biểu đồ" />
+          <ChartAdmin />
+
           {/* <!-- User Table --> */}
           <HeadingAdmin heading="Người dùng" />
           <UserList />
@@ -33,10 +37,6 @@ const Dashboard = () => {
           {/* <!-- Location Table --> */}
           <HeadingAdmin heading="Vị trí" />
           <LocationList />
-
-          {/* <!-- Charts --> */}
-          <HeadingAdmin heading="Biểu đồ" />
-          <ChartAdmin />
         </div>
       </main>
       <LoadingPage title={"Dashboard"} />
