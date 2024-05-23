@@ -42,11 +42,11 @@ const SearchModal = () => {
     }
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} className='relative'>
             <div className='flex justify-center items-center'>
                 <div className='border-1[px] w-full md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer'>
                     <div className='flex flex-row items-center justify-between'>
-                        <div className='text-sm font-semibold px-6 relative'>
+                        <div className='text-sm font-semibold px-6'>
                             <InputCustom
                                 name="searchTerm"
                                 label="Địa điểm"
