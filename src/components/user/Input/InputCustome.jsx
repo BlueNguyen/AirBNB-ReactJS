@@ -3,6 +3,7 @@ import { BiDollar } from 'react-icons/bi'
 
 const InputCustom = ({ id,
     label,
+    disabled,
     placeholder,
     className = "",
     name,
@@ -21,6 +22,7 @@ const InputCustom = ({ id,
                 <BiDollar size={24} className='text-neutral-700 absolute top-5 left-2' />
             )}
             <input
+                readOnly={readOnly}
                 onBlur={onBlur}
                 value={value}
                 onChange={onChange}

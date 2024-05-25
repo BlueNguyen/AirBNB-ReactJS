@@ -83,6 +83,7 @@ const UploadUserInfoModal = () => {
                 error={errors.name}
                 touched={touched.name} />
             <InputCustom
+                readOnly="true"
                 name="email"
                 label="Email"
                 onChange={handleChange}
