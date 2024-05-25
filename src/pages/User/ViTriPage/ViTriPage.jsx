@@ -62,7 +62,9 @@ const ViTriPage = () => {
                         ))}
                     </div>
                     <div className='w-full md:w-1/2'>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.667113845656!2d106.69362057480464!3d10.760118089387658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f137b9784b5%3A0xa9901de8d5dccee0!2zxJAuIELhur9uIFbDom4gxJDhu5NuLCBRdeG6rW4gNCwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1716612979580!5m2!1svi!2s" width="600" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.667113845656!2d106.69362057480464!3d10.760118089387658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f137b9784b5%3A0xa9901de8d5dccee0!2zxJAuIELhur9uIFbDom4gxJDhu5NuLCBRdeG6rW4gNCwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1716612979580!5m2!1svi!2s" style={{ border: 0 }}
+                            className='w-full h-full'
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
