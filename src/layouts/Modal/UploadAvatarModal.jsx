@@ -41,7 +41,6 @@ const UploadAvatarModal = () => {
                         closeModalUpload();
                     }, 1000)
                 } catch (error) {
-                    console.log(error)
                     toast.error("Something went Wrong")
                 } finally {
                     setIsLoading(false)

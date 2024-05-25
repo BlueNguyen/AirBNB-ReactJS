@@ -35,7 +35,7 @@ const RegisterModal = () => {
             initialValues: {
                 email: "",
                 name: "",
-                matKhau: "",
+                password: "",
             },
             onSubmit: async (values) => {
                 try {

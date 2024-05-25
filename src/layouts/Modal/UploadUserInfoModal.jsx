@@ -120,6 +120,7 @@ const UploadUserInfoModal = () => {
                 error={errors.gender}
                 touched={touched.gender} />
             <InputCustom
+                readOnly="true"
                 name="role"
                 label="role"
                 onChange={handleChange}

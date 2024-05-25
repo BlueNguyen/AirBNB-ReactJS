@@ -23,7 +23,7 @@ const SearchModal = () => {
             searchTerm: "",
         },
         onSubmit: (values) => {
-
+            setShowResults(false)
         },
     });
 
@@ -89,7 +89,6 @@ const SearchModal = () => {
                         </div>
                         {showResults && (
                             <div className="absolute z-10 mt-1 w-1/4 bg-white rounded-md shadow-lg top-20 left-0"
-                                onBlur={() => setShowResults(false)}
                             >
                                 {/* Nội dung của div */}
                                 {filteredResults.length > 0 && filteredResults.map((result, index) => (
