@@ -88,7 +88,7 @@ const SearchModal = () => {
                             </div>
                         </div>
                         {showResults && (
-                            <div className="absolute z-10 mt-1 w-1/4 bg-white border rounded-md shadow-lg top-20 left-0"
+                            <div className="absolute z-10 mt-1 w-1/4 bg-white rounded-md shadow-lg top-20 left-0"
                                 onBlur={() => setShowResults(false)}
                             >
                                 {/* Nội dung của div */}
