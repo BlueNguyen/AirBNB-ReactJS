@@ -22,7 +22,6 @@ const UserInfo = () => {
     const { user } = useSelector(state => state.useGetUserById)
     const { bookedRoom } = useSelector(state => state.useGetBookedById)
     const [roomInfo, setRoomInfo] = useState([])
-    console.log("roominfo", roomInfo.payload)
     const openModalUploadAvatar = () => {
         dispatch(handleOpenUpload());
     }
@@ -41,7 +40,6 @@ const UserInfo = () => {
         bookedRoom.forEach(room => {
             dispatch(getRoomById(room.maPhong)).then(roomData => {
                 newRoomInfo.push(roomData.payload);
-                console.log("roomData", roomData)
                 if (newRoomInfo.length === bookedRoom.length) {
                     setRoomInfo(newRoomInfo);
                 }

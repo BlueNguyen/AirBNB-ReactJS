@@ -19,7 +19,6 @@ const ViTriPage = () => {
         dispatch(getRoomByViTri(id));
     }, [dispatch, id]);
 
-    console.log(roomByViTri)
     return (
         <div>
             <LoginModal />

@@ -56,7 +56,6 @@ const DetailPage = () => {
     };
 
     const handleDateChange = (value) => {
-        console.log(value)
         setSelectedDates(value);
     };
 
@@ -98,13 +97,11 @@ const DetailPage = () => {
         onSubmit: async (values) => {
             try {
                 const res = await binhLuanServ.createBinhLuan(values);
-                console.log(res)
                 toast.success("Bình luận thành công")
                 setTimeout(() => {
                     window.location.reload()
                 }, 500)
             } catch (error) {
-                console.log(values)
                 toast.error("Something went Wrong")
             }
         }
